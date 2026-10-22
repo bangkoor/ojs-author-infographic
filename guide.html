@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OJS Author Infographic Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* Layout: a reading page. Contents rail on the left on wide screens, one column of steps that follow the tool's own numbering. Same tokens and roles as the tool (see DESIGN.md). */
+:root {
+  --bg: #f5f7f4;
+  --panel: #ffffff;
+  --ink: #14241e;
+  --muted: #4f625a;
+  --line: #d5dfda;
+  --field-line: #7f938a;
+  --green: #1d6b55;
+  --green-ink: #ffffff;
+  --green-soft: #e4f1eb;
+  --green-deep: #164f40;
+  --blue: #1f5f99;
+  --blue-soft: #e6eff8;
+  --blue-deep: #17466f;
+  --orange: #b45309;
+  --orange-soft: #fcefe3;
+  --orange-deep: #8a3f06;
+  --font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --tap: 38px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1613; --panel: #15201c; --ink: #e3ece7; --muted: #a3b5ad; --line: #2b3b35; --field-line: #6d8279;
+    --green: #5cc19c; --green-ink: #0e1613; --green-soft: #19302a; --green-deep: #8fd8bc;
+    --blue: #7fb3e6; --blue-soft: #172636; --blue-deep: #a9cdf0;
+    --orange: #f0a35e; --orange-soft: #33230f; --orange-deep: #f3b37a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1613; --panel: #15201c; --ink: #e3ece7; --muted: #a3b5ad; --line: #2b3b35; --field-line: #6d8279;
+  --green: #5cc19c; --green-ink: #0e1613; --green-soft: #19302a; --green-deep: #8fd8bc;
+  --blue: #7fb3e6; --blue-soft: #172636; --blue-deep: #a9cdf0;
+  --orange: #f0a35e; --orange-soft: #33230f; --orange-deep: #f3b37a;
+  color-scheme: dark;
+}
+@media (pointer: coarse), (max-width: 699px) { :root { --tap: 44px; } }
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.65 var(--font); -webkit-text-size-adjust: 100%; }
+a { color: var(--blue); text-underline-offset: 2px; }
+a:hover { color: var(--blue-deep); }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.ic { flex: 0 0 auto; width: 18px; height: 18px; }
+code { font-family: var(--mono); font-size: .86em; padding: 1px 5px; border-radius: 5px; background: var(--green-soft); color: var(--ink); overflow-wrap: anywhere; }
+
+.wrap { max-width: 1120px; margin: 0 auto; padding-block: 20px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* ---------- Header ---------- */
+header.top { display: grid; gap: 10px; margin-bottom: 28px; }
+.titlebar { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.by { margin: 0 0 6px; font-size: 13px; font-weight: 600; color: var(--green); }
+h1 { margin: 0; font-size: clamp(28px, 2.4vw + 16px, 40px); line-height: 1.12; font-weight: 800; letter-spacing: -.02em; text-wrap: balance; }
+.lede { margin: 0; max-width: 62ch; color: var(--muted); font-size: 17px; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; min-height: var(--tap); padding: 0 16px; font: inherit; font-size: 14px; font-weight: 700; border-radius: 8px; text-decoration: none; background: var(--green); color: var(--green-ink); }
+.btn:hover { color: var(--green-ink); filter: brightness(1.08); }
+.theme { display: inline-flex; align-items: center; gap: 8px; min-height: var(--tap); padding: 0 12px; font: inherit; font-size: 13px; font-weight: 600; color: var(--ink); background: var(--panel); border: 1px solid var(--field-line); border-radius: 8px; cursor: pointer; white-space: nowrap; }
+.theme:hover { border-color: var(--ink); }
+.theme .moon { display: none; }
+.theme[aria-pressed="true"] .sun { display: none; }
+.theme[aria-pressed="true"] .moon { display: block; }
+
+/* ---------- Layout ---------- */
+.layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; align-items: start; }
+@media (min-width: 1000px) { .layout { grid-template-columns: 230px minmax(0, 1fr); gap: 40px; } }
+
+/* Contents: a disclosure on phones and tablets, a sticky rail on wide screens */
+.toc { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; }
+.toc summary { display: flex; align-items: center; min-height: var(--tap); padding: 6px 16px; font-size: 14px; font-weight: 700; cursor: pointer; }
+.toc ol { list-style: none; margin: 0; padding: 0 8px 10px; counter-reset: t; }
+.toc li { counter-increment: t; }
+.toc a { display: flex; align-items: center; gap: 10px; min-height: var(--tap); padding: 4px 8px; border-radius: 8px; color: var(--ink); text-decoration: none; font-size: 14px; }
+.toc a:hover { background: var(--green-soft); color: var(--ink); }
+.toc a .n { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; font-size: 11px; font-weight: 800; background: var(--green-soft); color: var(--green-deep); flex: 0 0 auto; }
+.toc a .n.x { background: transparent; border: 1px solid var(--field-line); color: var(--muted); }
+@media (min-width: 1000px) {
+  .toc { position: sticky; top: max(16px, env(safe-area-inset-top, 0px)); background: transparent; border: 0; }
+  .toc summary { display: none; }
+  .toc ol { padding: 0; }
+}
+
+/* ---------- Content ---------- */
+main { min-width: 0; display: grid; gap: 14px; }
+.sec { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; scroll-margin-top: 16px; min-width: 0; }
+.sec.plain { background: transparent; border: 0; padding: 4px 0; }
+.sec > h2 { display: flex; align-items: center; gap: 12px; margin: 0 0 10px; font-size: 21px; line-height: 1.25; font-weight: 800; letter-spacing: -.01em; text-wrap: balance; }
+/* Step marker: a map pin with a soft ring, matching the tool and the markers on the generated map. */
+.pin { display: inline-grid; place-items: center; flex: 0 0 auto; width: 28px; height: 28px; margin-left: 4px; border-radius: 50%; background: var(--green); color: var(--green-ink); font-size: 13px; font-weight: 800; box-shadow: 0 0 0 4px var(--green-soft); }
+.sec h3 { margin: 18px 0 6px; font-size: 16px; font-weight: 700; }
+.sec p, .sec li { max-width: 68ch; }
+.sec p { margin: 0 0 10px; }
+.sec p:last-child { margin-bottom: 0; }
+.sec ul, .sec ol.list { margin: 0 0 10px; padding-left: 22px; }
+.sec li { margin: 4px 0; }
+.sec li::marker { color: var(--green); }
+
+/* Menu path: how OJS menus are written in the help text */
+.path { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 2px 0; font-weight: 600; }
+.path span + span::before { content: "›"; margin: 0 7px; color: var(--muted); font-weight: 500; }
+
+.note { display: flex; gap: 10px; align-items: flex-start; margin: 14px 0 0; padding: 12px 14px; border-radius: 10px; background: var(--blue-soft); font-size: 15px; }
+.note .ic { color: var(--blue); margin-top: 3px; }
+.note.watch { background: var(--orange-soft); }
+.note.watch .ic { color: var(--orange-deep); }
+.note p { margin: 0; }
+
+/* Parts of the infographic */
+.sec .parts { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin: 12px 0 0; padding: 0; list-style: none; }
+.parts li { margin: 0; padding: 12px 14px; border-radius: 10px; background: var(--bg); border: 1px solid var(--line); font-size: 14.5px; line-height: 1.5; }
+.parts b { display: block; font-size: 15px; }
+
+/* Tables */
+.tbl { overflow-x: auto; margin: 10px 0 4px; border: 1px solid var(--line); border-radius: 10px; }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.5; }
+th, td { text-align: left; vertical-align: top; padding: 9px 12px; border-bottom: 1px solid var(--line); }
+th { font-weight: 700; background: var(--bg); }
+tr:last-child td { border-bottom: 0; }
+td.res { white-space: nowrap; font-weight: 600; }
+td.res.c { color: var(--orange-deep); }
+
+/* Problems */
+.faq { display: grid; gap: 8px; margin-top: 10px; }
+.faq details { border: 1px solid var(--line); border-radius: 10px; background: var(--bg); }
+.faq summary { display: flex; align-items: center; min-height: var(--tap); padding: 10px 14px; font-weight: 700; cursor: pointer; }
+.faq details > div { padding: 0 14px 12px; }
+.faq details[open] summary { border-bottom: 1px solid var(--line); margin-bottom: 10px; }
+
+.foot { padding-block: 0 28px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap-foot { max-width: 1120px; margin: 0 auto; padding-top: 14px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+.wrap-foot a { color: inherit; }
+.wrap-foot a:hover { color: var(--ink); }
+
+@media (max-width: 699px) {
+  body { font-size: 15.5px; }
+  .sec { padding: 18px 16px; }
+  .sec > h2 { font-size: 19px; }
+  .lede { font-size: 16px; }
+  th, td { padding: 8px 10px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="titlebar">
+      <div>
+        <p class="by">A free tool from Media Konservasi and JPSL, IPB University</p>
+        <h1>How to use OJS Author Infographic</h1>
+      </div>
+      <button class="theme" id="theme" type="button" aria-pressed="false">
+        <svg class="ic sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="ic moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+        Dark theme
+      </button>
+    </div>
+    <p class="lede">From an OJS export to an author section on your journal homepage. The steps below follow the numbered steps in the tool.</p>
+    <div class="actions"><a class="btn" href="index.html">Open the tool</a></div>
+  </header>
+
+  <div class="layout">
+    <nav aria-label="On this page">
+      <details class="toc" id="toc" open>
+        <summary>On this page</summary>
+        <ol>
+          <li><a href="#before"><span class="n x" aria-hidden="true">·</span>Before you start</a></li>
+          <li><a href="#export"><span class="n" aria-hidden="true">1</span>Export and load the CSV</a></li>
+          <li><a href="#articles"><span class="n" aria-hidden="true">2</span>Choose the articles</a></li>
+          <li><a href="#countries"><span class="n" aria-hidden="true">3</span>Check author countries</a></li>
+          <li><a href="#topics"><span class="n" aria-hidden="true">4</span>Pick the topics</a></li>
+          <li><a href="#style"><span class="n" aria-hidden="true">5</span>Style</a></li>
+          <li><a href="#paste"><span class="n" aria-hidden="true">6</span>Paste into OJS</a></li>
+          <li><a href="#numbers"><span class="n x" aria-hidden="true">·</span>How the numbers are counted</a></li>
+          <li><a href="#update"><span class="n x" aria-hidden="true">·</span>Updating later</a></li>
+          <li><a href="#problems"><span class="n x" aria-hidden="true">·</span>When something goes wrong</a></li>
+          <li><a href="#privacy"><span class="n x" aria-hidden="true">·</span>Your data</a></li>
+        </ol>
+      </details>
+    </nav>
+
+    <main>
+      <section class="sec" id="before" aria-labelledby="h-before">
+        <h2 id="h-before">Before you start</h2>
+        <p>You need a Journal Manager or Editor account on an OJS 3 journal, so you can download reports and change the website settings. The tool runs in any current browser on a computer. A phone works for checking, but pasting code into OJS is easier on a computer.</p>
+        <p>What you will paste on your homepage has five parts:</p>
+        <ul class="parts">
+          <li><b>Four counters</b>articles published, authors, countries, and the share of articles with international authors.</li>
+          <li><b>World map</b>a marker for each author country, sized by the number of articles.</li>
+          <li><b>Where authors come from</b>your home country first, then a bar for each other country.</li>
+          <li><b>Collaboration</b>a ring chart of home-only, mixed and international-only articles.</li>
+          <li><b>Frequent topics</b>up to 18 keywords you choose. Left out if the file has no keywords.</li>
+        </ul>
+      </section>
+
+      <section class="sec" id="export" aria-labelledby="h-export">
+        <h2 id="h-export"><span class="pin" aria-hidden="true">1</span>Export and load the CSV</h2>
+        <ol class="list">
+          <li>In OJS, go to <span class="path"><span>Statistics</span><span>Reports</span></span> and choose <b>Articles Report</b>. OJS downloads a CSV file with one row per submission.</li>
+          <li>In the tool, drop that file on the green box in step 1, or click the box and choose it.</li>
+          <li>Check the line under the box. It should say <b>Loaded</b> with the file name and number of rows, followed by the columns the tool found.</li>
+        </ol>
+        <p>Until you load a file, the tool shows an invented example marked <b>Example data</b>. None of those numbers belong to a real journal.</p>
+        <div class="note watch">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg>
+          <p>Export with the OJS interface set to English. The tool reads English column names (such as <code>Given Name (Author 1)</code> and <code>Affiliation (Author 1)</code>) and a few Indonesian ones. Column names in other languages are not recognised yet.</p>
+        </div>
+      </section>
+
+      <section class="sec" id="articles" aria-labelledby="h-articles">
+        <h2 id="h-articles"><span class="pin" aria-hidden="true">2</span>Choose the articles</h2>
+        <h3>Journal name</h3>
+        <p>Filled in from the file name when possible. It appears in the source note at the bottom of the infographic, so use the name readers know.</p>
+        <h3>Published from and until</h3>
+        <p>The tool starts with the last three years up to today. Only articles whose <b>First published</b> date falls inside this range are counted. Change the dates if your homepage should cover a different period, for example one volume.</p>
+        <h3>Status counted as published</h3>
+        <p>Normally only <b>Published</b> is ticked. The Articles Report also lists declined and ongoing submissions; leave those unticked unless you have a reason.</p>
+        <h3>Sections to include</h3>
+        <p>Every section is ticked except ones that look like corrections, errata, retractions, editorials, front or back matter and re-uploaded old manuscripts. Untick any other section that should not count as a research article in your journal.</p>
+      </section>
+
+      <section class="sec" id="countries" aria-labelledby="h-countries">
+        <h2 id="h-countries"><span class="pin" aria-hidden="true">3</span>Check author countries</h2>
+        <p>Each author gets a country from their affiliation or from the Country field in their OJS profile. Abstracts and titles are never used. Choose how the tool decides:</p>
+        <div class="tbl">
+          <table>
+            <thead><tr><th scope="col">Option</th><th scope="col">What it uses</th><th scope="col">Good for</th></tr></thead>
+            <tbody>
+              <tr><td>Affiliation first, then the Country field</td><td>A country named in the affiliation. If there is none, the Country field.</td><td>Most journals. This is the default.</td></tr>
+              <tr><td>Affiliation only</td><td>Only countries named in the affiliation text.</td><td>Journals where authors often leave the Country field at a default value.</td></tr>
+              <tr><td>Country field only</td><td>Only the Country field.</td><td>Journals whose affiliations rarely name a country.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>The tick box below the options counts Indonesian institutions as Indonesia even when the affiliation does not say “Indonesia”. It recognises words such as <i>Universitas</i>, <i>Institut Pertanian</i>, <i>IPB</i>, <i>BRIN</i>, <i>Balai</i>, <i>Taman Nasional</i> and Indonesian city and island names. Untick it for a journal outside Indonesia.</p>
+        <h3>Examples (invented affiliations)</h3>
+        <div class="tbl">
+          <table>
+            <thead><tr><th scope="col">Affiliation</th><th scope="col">Country field</th><th scope="col">Result</th></tr></thead>
+            <tbody>
+              <tr><td>Faculty of Forestry, Universiti Putra Malaysia, Serdang</td><td>MY</td><td class="res">Malaysia</td></tr>
+              <tr><td>Department of Forest Resources Conservation, IPB University</td><td>(empty)</td><td class="res">Indonesia</td></tr>
+              <tr><td>Graduate School of Agriculture, Kyoto University, Japan</td><td>ID</td><td class="res c">Japan, marked Conflict</td></tr>
+              <tr><td>(no affiliation)</td><td>(empty)</td><td class="res c">No country found</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>Correcting a country</h3>
+        <ol class="list">
+          <li>Start with the <b>Needs checking</b> list. It holds authors with no country and authors whose Country field disagrees with their affiliation.</li>
+          <li>Read the affiliation and pick the right country from the menu in that row. The infographic updates straight away.</li>
+          <li>Open <b>International</b> to scan every author outside your home country. A wrong match shows up quickly here, for example an American university named after a place that is also a country.</li>
+        </ol>
+        <p>Corrections last until you load another file or reload the page. They are not saved anywhere.</p>
+      </section>
+
+      <section class="sec" id="topics" aria-labelledby="h-topics">
+        <h2 id="h-topics"><span class="pin" aria-hidden="true">4</span>Pick the topics</h2>
+        <p>The list shows the 40 most frequent keywords of the selected articles, with the number of articles for each. The most frequent ones are ticked.</p>
+        <ul>
+          <li>Tick up to 18 keywords. The two most frequent appear largest on the homepage.</li>
+          <li>Edit a label to tidy it, for example “Ecotourism” instead of “ecotourism”.</li>
+          <li>Give two keywords the same label to merge them. Their counts are added together.</li>
+        </ul>
+        <p>If the file has no Keywords column, or the articles have no keywords, the topics part is left out.</p>
+      </section>
+
+      <section class="sec" id="style" aria-labelledby="h-style">
+        <h2 id="h-style"><span class="pin" aria-hidden="true">5</span>Style</h2>
+        <p><b>Label language</b> switches every label, month name and the source note between English and Bahasa Indonesia. Country names follow the same language.</p>
+        <p><b>Main colour</b> is used for the counters, the home-country marker and the topics. <b>Accent colour</b> is used for the international markers, bars and the last counter. Pick colours from your journal’s logo or header and keep them dark enough for white text on the counters.</p>
+        <p>Use <b>OJS column</b> and <b>Phone</b> above the preview to see the section at both widths.</p>
+      </section>
+
+      <section class="sec" id="paste" aria-labelledby="h-paste">
+        <h2 id="h-paste"><span class="pin" aria-hidden="true">6</span>Paste into OJS</h2>
+        <p>The code comes in two parts. Copy them from the same session, because the CSS carries the positions and widths for the countries in that HTML.</p>
+        <h3>CSS: once per update, in the page header</h3>
+        <ol class="list">
+          <li>In the tool, choose <b>CSS</b> and click <b>Copy CSS</b>. The copied text starts with <code>&lt;style&gt;</code>.</li>
+          <li>In OJS, open <span class="path"><span>Settings</span><span>Website</span><span>Plugins</span></span>, find <b>Custom Header Plugin</b>, enable it, and open its <b>Settings</b>. If it is not listed, install it from the <b>Plugin Gallery</b> tab or ask your OJS administrator.</li>
+          <li>Paste into the header content field and save. If the field already has code, add the new code below it.</li>
+        </ol>
+        <h3>HTML: on the homepage</h3>
+        <ol class="list">
+          <li>In the tool, choose <b>HTML</b> and click <b>Copy HTML</b>.</li>
+          <li>In OJS, open <span class="path"><span>Settings</span><span>Website</span><span>Appearance</span><span>Setup</span></span> and find <b>Additional Content</b>.</li>
+          <li>Click the editor’s <b>Source code</b> button (<code>&lt;&gt;</code>), place the cursor where the section should go, paste, and save.</li>
+          <li>Open your journal homepage in a new tab and check the section on a computer and on a phone.</li>
+        </ol>
+        <div class="note watch">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg>
+          <p>Always paste the HTML in the <b>Source code</b> view. Pasted into the normal editor view, the code appears as text on your homepage, or the editor removes parts of it.</p>
+        </div>
+        <div class="note">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></svg>
+          <p>Menu names can differ slightly between OJS versions and themes. If you cannot find a menu, search the OJS documentation for “Custom Header plugin” and “Additional Content”.</p>
+        </div>
+      </section>
+
+      <section class="sec" id="numbers" aria-labelledby="h-numbers">
+        <h2 id="h-numbers">How the numbers are counted</h2>
+        <div class="tbl">
+          <table>
+            <thead><tr><th scope="col">Number</th><th scope="col">How it is counted</th></tr></thead>
+            <tbody>
+              <tr><td>Articles published</td><td>Rows with a ticked status, a first published date inside the period, and a ticked section.</td></tr>
+              <tr><td>Authors</td><td>Different people across those articles, matched by name. Someone with three articles counts once. The same person spelled two ways counts twice. Email addresses are not used, because many OJS accounts share placeholder emails.</td></tr>
+              <tr><td>Countries</td><td>Countries with at least one author in the selected articles.</td></tr>
+              <tr><td>Articles with international authors</td><td>Articles with at least one author from outside the home country, as a share of all selected articles. The home country is the one with the most articles.</td></tr>
+              <tr><td>Map markers and bars</td><td>The number of articles with at least one author from that country. An article with authors from two countries counts once for each country.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>These numbers can differ from the OJS statistics pages, which count submissions and readership rather than published articles in a chosen period.</p>
+      </section>
+
+      <section class="sec" id="update" aria-labelledby="h-update">
+        <h2 id="h-update">Updating later</h2>
+        <p>The infographic is a snapshot. It does not update by itself when new articles are published. After each new issue, or once a year:</p>
+        <ol class="list">
+          <li>Export a new Articles Report and load it in the tool.</li>
+          <li>Redo your choices: dates, sections, country corrections and topics. The tool keeps nothing from last time.</li>
+          <li>Replace both the old CSS in the Custom Header and the old HTML in Additional Content. Mixing an old part with a new part puts markers in the wrong place.</li>
+        </ol>
+      </section>
+
+      <section class="sec" id="problems" aria-labelledby="h-problems">
+        <h2 id="h-problems">When something goes wrong</h2>
+        <div class="faq">
+          <details>
+            <summary>“The file is missing columns the tool needs”</summary>
+            <div><p>The file is not the Articles Report, or it was exported with the OJS interface in another language. Download the Articles Report again with OJS set to English.</p></div>
+          </details>
+          <details>
+            <summary>“No articles match these settings”</summary>
+            <div><p>Check that <b>Published</b> is ticked in step 2, that the dates cover your published issues, and that at least one research section is ticked.</p></div>
+          </details>
+          <details>
+            <summary>The homepage shows plain text or a broken layout</summary>
+            <div><p>The CSS is not reaching the page. Check that the Custom Header plugin is enabled, that the pasted CSS starts with <code>&lt;style&gt;</code>, and that it comes from the same session as the HTML. Then reload the homepage, clearing the browser cache if needed.</p></div>
+          </details>
+          <details>
+            <summary>Code appears as text on the homepage</summary>
+            <div><p>The HTML was pasted in the normal editor view. Delete it, open the <b>Source code</b> view and paste again.</p></div>
+          </details>
+          <details>
+            <summary>Country flags do not appear</summary>
+            <div><p>Flags load from flagcdn.com. Some networks and browser extensions block outside images. The section still works, with a small grey box in place of each flag.</p></div>
+          </details>
+          <details>
+            <summary>The numbers do not count up</summary>
+            <div><p>The counting and map animations are turned off for visitors who ask their device for reduced motion, and older browsers show the final numbers straight away. Both show correct numbers.</p></div>
+          </details>
+          <details>
+            <summary>A country is clearly wrong</summary>
+            <div><p>Find the author under <b>International</b> or <b>All authors</b> in step 3 and pick the right country. Then copy both CSS and HTML again.</p></div>
+          </details>
+        </div>
+      </section>
+
+      <section class="sec" id="privacy" aria-labelledby="h-privacy">
+        <h2 id="h-privacy">Your data</h2>
+        <p>The CSV is read inside your browser tab. It is not uploaded to a server and nothing is stored after you close or reload the page. The generated code holds counts, country names and the keywords you pick. It does not hold author names, emails or affiliations.</p>
+        <p>The tool loads its fonts from Google Fonts and its CSV reader from cdnjs. Your file is not sent to either.</p>
+      </section>
+    </main>
+  </div>
+</div>
+<footer class="foot"><div class="wrap-foot">Built by the editorial teams of <a href="https://journal.ipb.ac.id/konservasi" target="_blank" rel="noopener">Media Konservasi</a> and <a href="https://journal.ipb.ac.id/index.php/jpsl" target="_blank" rel="noopener">Jurnal Pengelolaan Sumberdaya Alam dan Lingkungan (JPSL)</a>, IPB University.</div></footer>
+<script>
+(() => {
+  const btn = document.getElementById('theme');
+  const mq = matchMedia('(prefers-color-scheme: dark)');
+  const isDark = () => { const t = document.documentElement.dataset.theme; return t ? t === 'dark' : mq.matches; };
+  const sync = () => btn.setAttribute('aria-pressed', isDark());
+  btn.addEventListener('click', () => { document.documentElement.dataset.theme = isDark() ? 'light' : 'dark'; sync(); });
+  mq.addEventListener('change', sync);
+  sync();
+  // Contents start folded on narrow screens, where they would push the guide below the fold.
+  const toc = document.getElementById('toc');
+  const wide = matchMedia('(min-width: 1000px)');
+  const fold = () => { toc.open = wide.matches; };
+  wide.addEventListener('change', fold); fold();
+  toc.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if (!wide.matches) toc.open = false; }));
+})();
+</script>
+</body>
+</html>
