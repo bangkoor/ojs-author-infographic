@@ -710,7 +710,7 @@ function renderCode(){
   const isCss = S.codeTab==='css';
   $('#copy').textContent = isCss ? 'Copy CSS' : 'Copy HTML';
   $('#where').innerHTML = isCss
-    ? '<b>Paste the CSS</b> in OJS under Settings, Website, Appearance, Advanced, <b>Custom Header</b>. Then copy the HTML.'
+    ? '<b>Paste the CSS</b> in OJS under Settings, Website, Plugins. Search for <b>Custom Header Plugin</b>, click Settings. Then paste the HTML.'
     : '<b>Paste the HTML</b> in the homepage content (Settings, Website, Appearance, <b>Additional Content</b>) using the editor’s <b>Source code</b> button.';
   if (!lastOut) return;
   $('#code').textContent = isCss ? '<style>\n' + lastOut.css + '</style>\n' : lastOut.html;
